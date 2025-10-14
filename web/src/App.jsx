@@ -53,6 +53,8 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 const About = lazy(() => import('./pages/About'));
 const UserAgreement = lazy(() => import('./pages/UserAgreement'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const PrivacyAgreement = lazy(() => import('./pages/PrivacyAgreement'));
+const Contact = lazy(() => import('./pages/Contact'));
 
 function App() {
   const location = useLocation();
@@ -316,6 +318,41 @@ function App() {
           element={
             <Suspense fallback={<Loading></Loading>} key={location.pathname}>
               <PrivacyPolicy />
+            </Suspense>
+          }
+        />
+        {/* 兼容更友好的路径别名 */}
+        <Route
+          path='/privacy'
+          element={
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+              <PrivacyPolicy />
+            </Suspense>
+          }
+        />
+        {/* 新增：避免与内置隐私政策冲突的自定义隐私协议 */}
+        <Route
+          path='/privacy-agreement'
+          element={
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+              <PrivacyAgreement />
+            </Suspense>
+          }
+        />
+        <Route
+          path='/contact'
+          element={
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+              <Contact />
+            </Suspense>
+          }
+        />
+        {/* 新增：自定义“联系我们”别名，避免与静态页冲突 */}
+        <Route
+          path='/contact-us'
+          element={
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+              <Contact />
             </Suspense>
           }
         />
