@@ -14,7 +14,7 @@ export default function PrivacyAgreement() {
 
         <div className="prose prose-sm max-w-none">
           <p className="text-sm leading-7 mb-4">
-            API Router（以下简称：本产品）运营人工智能服务平台，用户可通过网站访问第三方应用程序接口（API），使用平台所列的各类生成式人工智能模型（以下简称：AI 模型）。本产品有权随时在服务中添加或移除 AI 模型，且无需提前通知用户。
+            API（以下简称：本产品）运营人工智能服务平台，用户可通过网站访问第三方应用程序接口（API），使用平台所列的各类生成式人工智能模型（以下简称：AI 模型）。本产品有权随时在服务中添加或移除 AI 模型，且无需提前通知用户。
           </p>
 
           <p className="text-sm leading-7 mb-6">
@@ -39,7 +39,7 @@ export default function PrivacyAgreement() {
             <section>
               <h2 className="text-lg font-medium mb-3">3. 使用 Microsoft Clarity 的第三方分析</h2>
               <p className="text-sm leading-7">
-                我们与 Microsoft Clarity 和 Microsoft Advertising 合作，通过行为指标、热图和会话回放来捕捉您如何使用和与我们网站互动，以改进和推广我们的产品/服务。网站使用数据通过第一方和第三方 Cookie 以及其他跟踪技术来捕获，以确定产品/服务的受欢迎程度和在线活动。此外，我们使用这些信息进行网站优化、欺诈/安全目的和广告。有关 Microsoft 如何收集和使用您的数据的更多信息，请访问 <a href="https://privacy.microsoft.com/privacystatement?ref=chatgot.io" className="!text-semi-color-primary" target="_blank" rel="noopener noreferrer">https://privacy.microsoft.com/privacystatement?ref=chatgot.io</a>。
+                我们与 Microsoft Clarity 和 Microsoft Advertising 合作，通过行为指标、热图和会话回放来捕捉您如何使用和与我们网站互动，以改进和推广我们的产品/服务。网站使用数据通过第一方和第三方 Cookie 以及其他跟踪技术来捕获，以确定产品/服务的受欢迎程度和在线活动。此外，我们使用这些信息进行网站优化、欺诈/安全目的和广告。有关 Microsoft 如何收集和使用您的数据的更多信息，请访问 <a href="https://privacy.microsoft.com/privacystatement" className="!text-semi-color-primary" target="_blank" rel="noopener noreferrer">https://privacy.microsoft.com/privacystatement?ref=chatgot.io</a>。
               </p>
             </section>
 
