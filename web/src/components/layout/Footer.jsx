@@ -218,6 +218,13 @@ const FooterBar = () => {
     loadFooter();
   }, []);
 
+  // 监听状态变化，当状态更新时重新加载页脚
+  useEffect(() => {
+    if (statusState?.status?.footer_html) {
+      setFooter(statusState.status.footer_html);
+    }
+  }, [statusState?.status?.footer_html]);
+
   return (
     <div className='w-full'>
       {footer ? (
