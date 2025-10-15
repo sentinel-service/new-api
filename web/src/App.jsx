@@ -51,6 +51,7 @@ import SetupCheck from './components/layout/SetupCheck';
 const Home = lazy(() => import('./pages/Home'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const About = lazy(() => import('./pages/About'));
+const Price = lazy(() => import('./pages/Price'));
 const UserAgreement = lazy(() => import('./pages/UserAgreement'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const PrivacyAgreement = lazy(() => import('./pages/PrivacyAgreement'));
@@ -307,6 +308,14 @@ function App() {
           }
         />
         <Route
+         path='/price'
+         element={
+           <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+             <Price />
+           </Suspense>
+         }
+       />
+       <Route
           path='/user-agreement'
           element={
             <Suspense fallback={<Loading></Loading>} key={location.pathname}>
