@@ -13,27 +13,30 @@ export default function Contact() {
           如有问题、合作或反馈，欢迎通过以下方式与我们联系。
         </p>
 
-        <div className="rounded-xl border border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.08)] bg-[rgba(0,0,0,0.02)] dark:bg-[rgba(255,255,255,0.03)] p-5 mb-6">
-          <h2 className="text-lg font-medium mb-2">联系方式</h2>
-          <ul className="list-disc pl-5 text-sm leading-7">
-            <li>
-              邮箱：<a href="mailto:support@example.com" className="!text-semi-color-primary">support@example.com</a>
-            </li>
-            <li>
-              工单：登录系统后进入 控制台 → 设置 → 反馈/其他 提交。
-            </li>
-          </ul>
-        </div>
-
-        <div className="rounded-xl border border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.08)] bg-[rgba(0,0,0,0.02)] dark:bg-[rgba(255,255,255,0.03)] p-5">
-          <h2 className="text-lg font-medium mb-2">快速留言（示例）</h2>
-          <p className="text-sm !text-semi-color-text-2 mb-3">此表单仅作展示，不会真正发送。</p>
-          <form className="grid grid-cols-1 gap-3" onSubmit={(e)=>e.preventDefault()}>
-            <input className="rounded-lg px-3 py-2 border border-[rgba(0,0,0,0.12)] dark:border-[rgba(255,255,255,0.12)] bg-transparent" placeholder="称呼" />
-            <input className="rounded-lg px-3 py-2 border border-[rgba(0,0,0,0.12)] dark:border-[rgba(255,255,255,0.12)] bg-transparent" type="email" placeholder="邮箱" />
-            <textarea className="rounded-lg px-3 py-2 h-28 border border-[rgba(0,0,0,0.12)] dark:border-[rgba(255,255,255,0.12)] bg-transparent" placeholder="留言"></textarea>
-            <button className="self-start rounded-lg px-4 py-2 bg-blue-600 text-white text-sm font-semibold">发送（演示）</button>
-          </form>
+        <div className="rounded-xl border border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.08)] bg-[rgba(0,0,0,0.02)] dark:bg-[rgba(255,255,255,0.03)] p-8 text-center">
+          <div className="mb-4">
+            <svg className="mx-auto h-12 w-12 text-semi-color-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-medium mb-4">邮箱联系</h2>
+          <p className="text-sm !text-semi-color-text-2 mb-6">
+            请通过以下邮箱地址与我们联系。
+          </p>
+          <div className="flex items-center justify-center">
+            <a 
+              href="mailto:goverperson@gmail.com" 
+              className="inline-flex items-center px-6 py-3 bg-semi-color-primary text-white font-medium rounded-lg hover:bg-semi-color-primary-hover transition-colors"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              goverperson@gmail.com
+            </a>
+          </div>
+          <p className="text-xs !text-semi-color-text-3 mt-4">
+            点击上方按钮可直接打开邮件客户端
+          </p>
         </div>
       </div>
     </div>

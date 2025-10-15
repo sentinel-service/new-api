@@ -54,6 +54,7 @@ const About = lazy(() => import('./pages/About'));
 const UserAgreement = lazy(() => import('./pages/UserAgreement'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const PrivacyAgreement = lazy(() => import('./pages/PrivacyAgreement'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const Contact = lazy(() => import('./pages/Contact'));
 
 function App() {
@@ -339,6 +340,15 @@ function App() {
             </Suspense>
           }
         />
+        {/* 新增：服务条款页面 */}
+        <Route
+          path='/terms-of-service'
+          element={
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+              <TermsOfService />
+            </Suspense>
+          }
+        />
         <Route
           path='/contact'
           element={
@@ -347,7 +357,7 @@ function App() {
             </Suspense>
           }
         />
-        {/* 新增：自定义“联系我们”别名，避免与静态页冲突 */}
+        {/* 新增：自定义"联系我们"别名，避免与静态页冲突 */}
         <Route
           path='/contact-us'
           element={
