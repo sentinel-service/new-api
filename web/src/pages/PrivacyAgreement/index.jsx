@@ -14,7 +14,7 @@ export default function PrivacyAgreement() {
 
         <div className="prose prose-sm max-w-none">
           <p className="text-sm leading-7 mb-4">
-            API（以下简称：本产品）运营人工智能服务平台，用户可通过网站访问第三方应用程序接口（API），使用平台所列的各类生成式人工智能模型（以下简称：AI 模型）。本产品有权随时在服务中添加或移除 AI 模型，且无需提前通知用户。
+            API Router（以下简称：本产品）运营人工智能服务平台，用户可通过网站访问第三方应用程序接口（API），使用平台所列的各类生成式人工智能模型（以下简称：AI 模型）。本产品有权随时在服务中添加或移除 AI 模型，且无需提前通知用户。
           </p>
 
           <p className="text-sm leading-7 mb-6">

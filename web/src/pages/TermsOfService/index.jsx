@@ -143,7 +143,7 @@ export default function TermsOfService() {
                 对于任何查询或支持，请联系 <a href="mailto:goverperson@gmail.com" className="!text-semi-color-primary">goverperson@gmail.com</a>
               </p>
               <p className="text-sm leading-7 mt-3">
-                一旦您使用本产品，即代表用户同意以上条款和条件。
+                一旦您使用本产品，即代表您同意以上条款和条件。
               </p>
             </section>
           </div>
