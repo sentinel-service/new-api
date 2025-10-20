@@ -179,6 +179,11 @@ export default function SettingsHeaderNavModules(props) {
       hasSubConfig: true, // 标识该模块有子配置
     },
     {
+      key: 'price',
+      title: t('价格'),
+      description: t('价格页面，展示系统定价信息'),
+    },
+    {
       key: 'docs',
       title: t('文档'),
       description: t('系统文档和帮助信息'),
