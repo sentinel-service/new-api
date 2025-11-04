@@ -63,7 +63,9 @@ export const useNavigation = (t, docsLink, headerNavModules) => {
       {
         text: t('价格'),
         itemKey: 'price',
-        to: '/price',
+        isExternal: true,
+        externalLink: '/cashier',
+        externalSameWindow: true,
       },
       {
         text: t('关于'),

@@ -308,7 +308,7 @@ function App() {
           }
         />
         <Route
-         path='/price'
+         path='/cashier'
          element={
            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
              <Price />

@@ -44,7 +44,7 @@ const Navigation = ({
           <a
             key={link.itemKey}
             href={link.externalLink}
-            target='_blank'
+            target={link.externalSameWindow ? '_self' : '_blank'}
             rel='noopener noreferrer'
             className={commonLinkClasses}
           >
