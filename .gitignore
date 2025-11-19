@@ -1,6 +1,5 @@
 .idea
 .vscode
-.cursor
 upload
 *.exe
 *.db
@@ -12,6 +11,7 @@ web/dist
 one-api
 new-api
 .DS_Store
+.cursor
 tiktoken_cache
 .eslintcache
 .gocache
