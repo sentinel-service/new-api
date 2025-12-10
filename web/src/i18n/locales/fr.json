@@ -12,6 +12,8 @@
     " 秒": "s",
     "，时间：": ", time:",
     "，点击更新": ", cliquez sur Mettre à jour",
+    "隐私协议": "Politique de confidentialité",
+    "服务条款": "Conditions d'utilisation",
     "（当前仅支持易支付接口，默认使用上方服务器地址作为回调地址！）": "(Actuellement, seule l'interface Epay est prise en charge, l'adresse du serveur ci-dessus est utilisée par défaut comme adresse de rappel !)",
     "(输入 {{input}} tokens / 1M tokens * {{symbol}}{{price}}": "(Entrée {{input}} tokens / 1M tokens * {{symbol}}{{price}}",
     "(输入 {{nonAudioInput}} tokens / 1M tokens * {{symbol}}{{price}} + 音频输入 {{audioInput}} tokens / 1M tokens * {{symbol}}{{audioPrice}}": "(Entrée {{nonAudioInput}} tokens / 1M tokens * {{symbol}}{{price}} + Entrée audio {{audioInput}} tokens / 1M tokens * {{symbol}}{{audioPrice}}",

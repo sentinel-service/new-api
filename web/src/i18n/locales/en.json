@@ -10,6 +10,8 @@
     " 秒": "s",
     "，时间：": ",time:",
     "，点击更新": ", click Update",
+    "隐私协议": "Privacy Agreement",
+    "服务条款": "Terms of Service",
     "（当前仅支持易支付接口，默认使用上方服务器地址作为回调地址！）": "(Currently only supports Epay interface, the default callback address is the server address above!)",
     "(输入 {{input}} tokens / 1M tokens * {{symbol}}{{price}}": "(Input {{input}} tokens / 1M tokens * {{symbol}}{{price}}",
     "(输入 {{nonAudioInput}} tokens / 1M tokens * {{symbol}}{{price}} + 音频输入 {{audioInput}} tokens / 1M tokens * {{symbol}}{{audioPrice}}": "(Input {{nonAudioInput}} tokens / 1M tokens * {{symbol}}{{price}} + Audio input {{audioInput}} tokens / 1M tokens * {{symbol}}{{audioPrice}}",

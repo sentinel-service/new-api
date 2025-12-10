@@ -225,13 +225,28 @@ const FooterBar = () => {
     }
   }, [statusState?.status?.footer_html]);
 
+  // 处理页脚中的翻译占位符
+  const processFooterTranslations = (html) => {
+    if (!html) return html;
+
+    // 替换 {{t:key}} 格式的占位符
+    return html.replace(/\{\{t:([^}]+)\}\}/g, (match, key) => {
+      return t(key.trim());
+    });
+  };
+
+  const processedFooter = useMemo(
+    () => processFooterTranslations(footer),
+    [footer, t]
+  );
+
   return (
     <div className='w-full'>
       {footer ? (
         <div className='relative'>
           <div
             className='custom-footer'
-            dangerouslySetInnerHTML={{ __html: footer }}
+            dangerouslySetInnerHTML={{ __html: processedFooter }}
           ></div>
           <div className='absolute bottom-2 right-4 text-xs !text-semi-color-text-2 opacity-70'>
             <span>{t('设计与开发由')} </span>

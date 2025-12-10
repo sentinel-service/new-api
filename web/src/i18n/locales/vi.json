@@ -10,6 +10,8 @@
     " 秒": " giây",
     "，时间：": ", thời gian:",
     "，点击更新": ", nhấn để cập nhật",
+    "隐私协议": "Chính sách bảo mật",
+    "服务条款": "Điều khoản dịch vụ",
     "（当前仅支持易支付接口，默认使用上方服务器地址作为回调地址！）": "(Hiện tại chỉ hỗ trợ giao diện Epay, địa chỉ máy chủ phía trên được sử dụng làm địa chỉ gọi lại theo mặc định!)",
     "(输入 {{input}} tokens / 1M tokens * {{symbol}}{{price}}": "(Đầu vào {{input}} tokens / 1M tokens * {{symbol}}{{price}}",
     "(输入 {{nonAudioInput}} tokens / 1M tokens * {{symbol}}{{price}} + 音频输入 {{audioInput}} tokens / 1M tokens * {{symbol}}{{audioPrice}}": "(Đầu vào {{nonAudioInput}} tokens / 1M tokens * {{symbol}}{{price}} + Đầu vào âm thanh {{audioInput}} tokens / 1M tokens * {{symbol}}{{audioPrice}}",
