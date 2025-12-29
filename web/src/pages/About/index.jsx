@@ -74,7 +74,7 @@ const AboutContentZh = () => (
     <div style={{ textAlign: 'center', marginTop: '50px', padding: '30px', background: '#f5f5f5', borderRadius: '8px' }}>
       <p style={{ fontSize: '16px', color: '#555' }}>如有任何疑问或合作需求，欢迎联系我们</p>
       <p style={{ marginTop: '15px' }}>
-        <a href="mailto:goverperson@gmail.com" style={{ color: '#000', textDecoration: 'none', fontWeight: '500', borderBottom: '2px solid #000' }}>goverperson@gmail.com</a>
+        <a href="mailto:apirouterai@gmail.com" style={{ color: '#000', textDecoration: 'none', fontWeight: '500', borderBottom: '2px solid #000' }}>apirouterai@gmail.com</a>
       </p>
     </div>
   </div>
@@ -127,7 +127,7 @@ const AboutContentEn = () => (
     <div style={{ textAlign: 'center', marginTop: '50px', padding: '30px', background: '#f5f5f5', borderRadius: '8px' }}>
       <p style={{ fontSize: '16px', color: '#555' }}>For any questions or cooperation needs, please contact us</p>
       <p style={{ marginTop: '15px' }}>
-        <a href="mailto:goverperson@gmail.com" style={{ color: '#000', textDecoration: 'none', fontWeight: '500', borderBottom: '2px solid #000' }}>goverperson@gmail.com</a>
+        <a href="mailto:apirouterai@gmail.com" style={{ color: '#000', textDecoration: 'none', fontWeight: '500', borderBottom: '2px solid #000' }}>apirouterai@gmail.com</a>
       </p>
     </div>
   </div>

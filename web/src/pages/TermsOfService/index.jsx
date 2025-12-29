@@ -140,7 +140,7 @@ const TermsOfServiceZh = () => (
         <section>
           <h2 className="text-lg font-medium mb-3">联系方式</h2>
           <p className="text-sm leading-7">
-            对于任何查询或支持，请联系 <a href="mailto:goverperson@gmail.com" className="!text-semi-color-primary">goverperson@gmail.com</a>
+            对于任何查询或支持，请联系 <a href="mailto:apirouterai@gmail.com" className="!text-semi-color-primary">apirouterai@gmail.com</a>
           </p>
           <p className="text-sm leading-7 mt-3">
             一旦您使用本产品，即代表您同意以上条款和条件。
@@ -286,7 +286,7 @@ const TermsOfServiceEn = () => (
         <section>
           <h2 className="text-lg font-medium mb-3">Contact Information</h2>
           <p className="text-sm leading-7">
-            For any inquiries or support, please contact <a href="mailto:goverperson@gmail.com" className="!text-semi-color-primary">goverperson@gmail.com</a>
+            For any inquiries or support, please contact <a href="mailto:apirouterai@gmail.com" className="!text-semi-color-primary">apirouterai@gmail.com</a>
           </p>
           <p className="text-sm leading-7 mt-3">
             By using this Product, you agree to the above terms and conditions.

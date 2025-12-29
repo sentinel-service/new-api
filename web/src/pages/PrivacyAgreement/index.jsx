@@ -127,7 +127,7 @@ const PrivacyPolicyZh = () => (
             如果您对本隐私政策有任何疑问或建议，请通过以下方式与我们联系：
           </p>
           <p className="text-sm leading-7 mt-3">
-            电子邮箱：<a href="mailto:goverperson@gmail.com" className="!text-semi-color-primary">goverperson@gmail.com</a>
+            电子邮箱：<a href="mailto:apirouterai@gmail.com" className="!text-semi-color-primary">apirouterai@gmail.com</a>
           </p>
         </section>
       </div>
@@ -261,7 +261,7 @@ const PrivacyPolicyEn = () => (
             If you have any questions or suggestions about this Privacy Policy, please contact us:
           </p>
           <p className="text-sm leading-7 mt-3">
-            Email: <a href="mailto:goverperson@gmail.com" className="!text-semi-color-primary">goverperson@gmail.com</a>
+            Email: <a href="mailto:apirouterai@gmail.com" className="!text-semi-color-primary">apirouterai@gmail.com</a>
           </p>
         </section>
       </div>

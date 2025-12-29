@@ -238,20 +238,18 @@ const Home = () => {
                     >
                       {statusState.status.version}
                     </Button>
-                  // ) : (
-                  //   docsLink && (
-                  //     <Button
-                  //       size={isMobile ? 'default' : 'large'}
-                  //       className='flex items-center !rounded-3xl px-6 py-2'
-                  //       icon={<IconFile />}
-                  //       onClick={() => window.open(docsLink, '_blank')}
-                  //     >
-                  //       {t('文档')}
-                  //     </Button>
-                  //   )
-                  // )}
-                    
-                   ) : null}
+                  ) : (
+                    docsLink && (
+                      <Button
+                        size={isMobile ? 'default' : 'large'}
+                        className='flex items-center !rounded-3xl px-6 py-2'
+                        icon={<IconFile />}
+                        onClick={() => window.open(docsLink, '_blank')}
+                      >
+                        {t('文档')}
+                      </Button>
+                    )
+                  )}
                 </div>
 
                 {/* 框架兼容性图标 */}
