@@ -2350,7 +2350,6 @@
     "缓存创建倍率 {{cacheCreationRatio}}": "Ratio de création de cache {{cacheCreationRatio}}",
     "缓存创建倍率 1h {{cacheCreationRatio1h}}": "Multiplicateur de création de cache 1h {{cacheCreationRatio1h}}",
     "缓存创建倍率 5m {{cacheCreationRatio5m}}": "Multiplicateur de création de cache 5m {{cacheCreationRatio5m}}",
-    "缓存创建倍率 5m {{cacheCreationRatio5m}} / 1h {{cacheCreationRatio1h}}": "Ratio de création de cache 5m {{cacheCreationRatio5m}} / 1h {{cacheCreationRatio1h}}",
     "缓存条目数": "",
     "缓存目录": "",
     "缓存目录磁盘空间": "",

@@ -1902,7 +1902,6 @@
     "缓存创建倍率 {{cacheCreationRatio}}": "缓存创建倍率 {{cacheCreationRatio}}",
     "缓存创建倍率 1h {{cacheCreationRatio1h}}": "缓存创建倍率 1h {{cacheCreationRatio1h}}",
     "缓存创建倍率 5m {{cacheCreationRatio5m}}": "缓存创建倍率 5m {{cacheCreationRatio5m}}",
-    "缓存创建倍率 5m {{cacheCreationRatio5m}} / 1h {{cacheCreationRatio1h}}": "缓存创建倍率 5m {{cacheCreationRatio5m}} / 1h {{cacheCreationRatio1h}}",
     "编辑": "编辑",
     "编辑API": "编辑API",
     "编辑产品": "编辑产品",
