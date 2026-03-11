@@ -960,6 +960,11 @@ type topUpRequest struct {
 	Key string `json:"key"`
 }
 
+type adminTopUpRequest struct {
+	Key    string `json:"key" binding:"required"`
+	UserId int    `json:"user_id" binding:"required"`
+}
+
 var topUpLocks sync.Map
 var topUpCreateLock sync.Mutex
 
@@ -999,6 +1004,35 @@ func getTopUpLock(userID int) *topUpTryLock {
 	l := newTopUpTryLock()
 	topUpLocks.Store(userID, l)
 	return l
+}
+
+func AdminTopUp(c *gin.Context) {
+	req := adminTopUpRequest{}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		common.ApiError(c, err)
+		return
+	}
+	lock := getTopUpLock(req.UserId)
+	if !lock.TryLock() {
+		common.ApiErrorI18n(c, i18n.MsgUserTopUpProcessing)
+		return
+	}
+	defer lock.Unlock()
+	quota, err := model.Redeem(req.Key, req.UserId)
+	if err != nil {
+		if errors.Is(err, model.ErrRedeemFailed) {
+			common.ApiErrorI18n(c, i18n.MsgRedeemFailed)
+			return
+		}
+		common.ApiError(c, err)
+		return
+	}
+	model.RecordLog(req.UserId, model.LogTypeManage, fmt.Sprintf("管理员使用兑换码为用户充值 %s", logger.LogQuota(quota)))
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"message": "",
+		"data":    quota,
+	})
 }
 
 func TopUp(c *gin.Context) {
