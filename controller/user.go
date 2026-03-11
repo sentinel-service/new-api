@@ -965,6 +965,11 @@ type adminTopUpRequest struct {
 	UserId int    `json:"user_id" binding:"required"`
 }
 
+type adminAddQuotaRequest struct {
+	UserId int `json:"user_id" binding:"required"`
+	Quota  int `json:"quota" binding:"required"`
+}
+
 var topUpLocks sync.Map
 var topUpCreateLock sync.Mutex
 
@@ -1004,6 +1009,27 @@ func getTopUpLock(userID int) *topUpTryLock {
 	l := newTopUpTryLock()
 	topUpLocks.Store(userID, l)
 	return l
+}
+
+func AdminAddQuota(c *gin.Context) {
+	req := adminAddQuotaRequest{}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		common.ApiError(c, err)
+		return
+	}
+	if req.Quota == 0 {
+		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
+		return
+	}
+	if err := model.IncreaseUserQuota(req.UserId, req.Quota, true); err != nil {
+		common.ApiError(c, err)
+		return
+	}
+	model.RecordLog(req.UserId, model.LogTypeManage, fmt.Sprintf("管理员为用户增加额度 %s", logger.LogQuota(req.Quota)))
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"message": "",
+	})
 }
 
 func AdminTopUp(c *gin.Context) {

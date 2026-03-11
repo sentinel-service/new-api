@@ -24,7 +24,6 @@ import {
   Tag,
   Card,
   Button,
-  Banner,
   Skeleton,
   Form,
   Space,
@@ -80,8 +79,6 @@ const RechargeCard = ({
   setRedemptionCode,
   topUp,
   isSubmitting,
-  topUpLink,
-  openTopUpLink,
   userState,
   renderQuota,
   statusLoading,
@@ -511,16 +508,7 @@ const RechargeCard = ({
               )}
             </div>
           </Form>
-        ) : (
-          <Banner
-            type='info'
-            description={t(
-              '管理员未开启在线充值功能，请联系管理员开启或使用兑换码充值。',
-            )}
-            className='!rounded-xl'
-            closeIcon={null}
-          />
-        )}
+        ) : null}
       </Card>
 
       {/* 兑换码充值 */}
@@ -557,21 +545,6 @@ const RechargeCard = ({
             }
             showClear
             style={{ width: '100%' }}
-            extraText={
-              topUpLink && (
-                <Text type='tertiary'>
-                  {t('在找兑换码？')}
-                  <Text
-                    type='secondary'
-                    underline
-                    className='cursor-pointer'
-                    onClick={openTopUpLink}
-                  >
-                    {t('购买兑换码')}
-                  </Text>
-                </Text>
-              )
-            }
           />
         </Form>
       </Card>
@@ -593,13 +566,25 @@ const RechargeCard = ({
             <div className='text-xs'>{t('多种充值方式，安全便捷')}</div>
           </div>
         </div>
-        <Button
-          icon={<Receipt size={16} />}
-          theme='solid'
-          onClick={onOpenHistory}
-        >
-          {t('账单')}
-        </Button>
+        <div className='flex items-center gap-2'>
+          <Button
+            theme='solid'
+            type='primary'
+            icon={<CreditCard size={16} />}
+            onClick={() =>
+              window.open(`${window.location.origin}/cashier`, '_blank')
+            }
+          >
+            {t('充值')}
+          </Button>
+          <Button
+            icon={<Receipt size={16} />}
+            theme='solid'
+            onClick={onOpenHistory}
+          >
+            {t('账单')}
+          </Button>
+        </div>
       </div>
 
       {shouldShowSubscription ? (
@@ -651,3 +636,4 @@ const RechargeCard = ({
 };
 
 export default RechargeCard;
+
