@@ -165,6 +165,26 @@ const Home = () => {
     () => API_ENDPOINTS.map((item) => ({ value: item })),
     [],
   );
+  const codeExample = useMemo(
+    () => `# ${t('接口通AI — 三行代码即刻接入')}
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="${serverAddress}",
+    api_key="your-api-key"
+)
+
+response = client.chat.completions.create(
+    model="claude-sonnet-4-20250514",
+    messages=[{
+        "role": "user",
+        "content": "${t('你好，接口通！')}"
+    }]
+)
+
+print(response.choices[0].message.content)`,
+    [serverAddress, t],
+  );
 
   const displayHomePageContent = async () => {
     setHomePageContent(localStorage.getItem('home_page_content') || '');
@@ -972,7 +992,7 @@ const Home = () => {
                       </ul>
                       <div className='home-base-box'>
                         <div className='mb-3 text-xs font-semibold uppercase tracking-[0.24em] text-slate-500'>
-                          Base URL
+                          {t('API地址')}
                         </div>
                         <Input
                           readonly
@@ -1006,23 +1026,7 @@ const Home = () => {
                     <div className='home-reveal'>
                       <div className='home-code-block'>
                         <pre className='m-0 whitespace-pre-wrap break-words'>
-{`# 接口通AI — 三行代码即刻接入
-from openai import OpenAI
-
-client = OpenAI(
-    base_url="${serverAddress}",
-    api_key="your-api-key"
-)
-
-response = client.chat.completions.create(
-    model="claude-sonnet-4-20250514",
-    messages=[{
-        "role": "user",
-        "content": "你好，接口通！"
-    }]
-)
-
-print(response.choices[0].message.content)`}
+{codeExample}
                         </pre>
                       </div>
                     </div>
