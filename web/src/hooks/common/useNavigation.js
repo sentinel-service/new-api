@@ -29,10 +29,14 @@ export const useNavigation = (t, docsLink, headerNavModules) => {
       price: true,
       docs: true,
       about: true,
+      contact: true,
     };
 
     // 使用传入的配置或默认配置
-    const modules = headerNavModules || defaultModules;
+    const modules = {
+      ...defaultModules,
+      ...headerNavModules,
+    };
 
     const allLinks = [
       {
@@ -71,6 +75,11 @@ export const useNavigation = (t, docsLink, headerNavModules) => {
         text: t('关于'),
         itemKey: 'about',
         to: '/about',
+      },
+      {
+        text: t('联系我们'),
+        itemKey: 'contact',
+        to: '/contact',
       },
     ];
 

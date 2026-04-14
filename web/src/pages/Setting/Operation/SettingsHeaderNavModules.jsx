@@ -42,12 +42,27 @@ export default function SettingsHeaderNavModules(props) {
   const [headerNavModules, setHeaderNavModules] = useState({
     home: true,
     console: true,
+    price: true,
     pricing: {
       enabled: true,
       requireAuth: false, // 默认不需要登录鉴权
     },
     docs: true,
     about: true,
+    contact: true,
+  });
+
+  const getDefaultHeaderNavModules = () => ({
+    home: true,
+    console: true,
+    price: true,
+    pricing: {
+      enabled: true,
+      requireAuth: false,
+    },
+    docs: true,
+    about: true,
+    contact: true,
   });
 
   // 处理顶栏模块配置变更
@@ -79,17 +94,7 @@ export default function SettingsHeaderNavModules(props) {
 
   // 重置顶栏模块为默认配置
   function resetHeaderNavModules() {
-    const defaultModules = {
-      home: true,
-      console: true,
-      pricing: {
-        enabled: true,
-        requireAuth: false,
-      },
-      docs: true,
-      about: true,
-    };
-    setHeaderNavModules(defaultModules);
+    setHeaderNavModules(getDefaultHeaderNavModules());
     showSuccess(t('已重置为默认配置'));
   }
 
@@ -133,6 +138,7 @@ export default function SettingsHeaderNavModules(props) {
     if (props.options && props.options.HeaderNavModules) {
       try {
         const modules = JSON.parse(props.options.HeaderNavModules);
+        const defaultModules = getDefaultHeaderNavModules();
 
         // 处理向后兼容性：如果pricing是boolean，转换为对象格式
         if (typeof modules.pricing === 'boolean') {
@@ -142,20 +148,16 @@ export default function SettingsHeaderNavModules(props) {
           };
         }
 
-        setHeaderNavModules(modules);
-      } catch (error) {
-        // 使用默认配置
-        const defaultModules = {
-          home: true,
-          console: true,
+        setHeaderNavModules({
+          ...defaultModules,
+          ...modules,
           pricing: {
-            enabled: true,
-            requireAuth: false,
+            ...defaultModules.pricing,
+            ...modules.pricing,
           },
-          docs: true,
-          about: true,
-        };
-        setHeaderNavModules(defaultModules);
+        });
+      } catch (error) {
+        setHeaderNavModules(getDefaultHeaderNavModules());
       }
     }
   }, [props.options]);
@@ -192,6 +194,11 @@ export default function SettingsHeaderNavModules(props) {
       key: 'about',
       title: t('关于'),
       description: t('关于系统的详细信息'),
+    },
+    {
+      key: 'contact',
+      title: t('联系我们'),
+      description: t('联系方式与客服入口'),
     },
   ];
 
