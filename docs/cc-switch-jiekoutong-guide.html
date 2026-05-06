@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>如何接入 Claude Code</title>
+    <style>
+      :root {
+        --bg: #f6f8fb;
+        --surface: #ffffff;
+        --text: #111827;
+        --muted: #5b6473;
+        --line: #e6eaf0;
+        --brand: #2563eb;
+        --brand-soft: #eff6ff;
+        --good: #0f9f6e;
+        --warn: #b45309;
+        --shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          "PingFang SC",
+          "Hiragino Sans GB",
+          "Microsoft YaHei",
+          sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), transparent 26%),
+          linear-gradient(180deg, #fbfcfe 0%, var(--bg) 100%);
+      }
+
+      .page {
+        width: min(980px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 48px 0 72px;
+      }
+
+      .hero {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        padding: 32px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--brand-soft);
+        color: var(--brand);
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      h1 {
+        margin: 18px 0 12px;
+        font-size: 34px;
+        line-height: 1.2;
+      }
+
+      .lead {
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .quick-grid,
+      .steps,
+      .faq {
+        margin-top: 24px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .quick-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .card h2,
+      .card h3 {
+        margin: 0 0 10px;
+        font-size: 18px;
+      }
+
+      .card p,
+      .card li {
+        color: var(--muted);
+        line-height: 1.8;
+        font-size: 15px;
+      }
+
+      .section-title {
+        margin: 36px 0 14px;
+        font-size: 24px;
+      }
+
+      ol,
+      ul {
+        margin: 10px 0 0;
+        padding-left: 22px;
+      }
+
+      li + li {
+        margin-top: 8px;
+      }
+
+      .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--brand);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+
+      .callout {
+        margin-top: 16px;
+        border-radius: 8px;
+        padding: 16px 18px;
+        border: 1px solid rgba(15, 159, 110, 0.22);
+        background: rgba(15, 159, 110, 0.08);
+      }
+
+      .callout.warn {
+        border-color: rgba(180, 83, 9, 0.22);
+        background: rgba(245, 158, 11, 0.08);
+      }
+
+      .callout p {
+        margin: 0;
+        color: var(--text);
+      }
+
+      .field-list {
+        margin-top: 14px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .field {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px 14px;
+        background: #fbfcfe;
+      }
+
+      .field strong {
+        display: inline-block;
+        min-width: 108px;
+      }
+
+      code {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 6px;
+        background: #eef2f7;
+        color: #0f172a;
+        font-family:
+          "SFMono-Regular",
+          Consolas,
+          "Liberation Mono",
+          Menlo,
+          monospace;
+        font-size: 14px;
+      }
+
+      .shot {
+        margin: 18px 0 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .shot svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .shot text {
+        font-family:
+          "PingFang SC",
+          "Hiragino Sans GB",
+          "Microsoft YaHei",
+          sans-serif;
+      }
+
+      .shot figcaption {
+        padding: 10px 14px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        background: #fbfcfe;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .faq .card p {
+        margin: 8px 0 0;
+      }
+
+      .footer {
+        margin-top: 24px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 720px) {
+        .page {
+          width: min(100vw - 20px, 980px);
+          padding: 20px 0 48px;
+        }
+
+        .hero,
+        .card {
+          padding: 18px;
+        }
+
+        h1 {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <span class="eyebrow">接口通 × CC Switch</span>
+        <h1>如何接入 Claude Code</h1>
+      </section>
+
+      <section class="card" style="margin-top: 24px">
+        <h2>适合什么场景</h2>
+        <p>
+          如果您想使用 Claude Code 或 Codex，但暂时不想购买它们的官方会员，可以先注册接口通账号，
+          在接口通中创建可用的 <code>sk-...</code> 令牌，然后通过 CC Switch
+          切换访问地址：把原来的官方地址切换为接口通地址 <code>https://apirouter.ai</code>。
+          这样 Claude Code 或 Codex 的请求就会通过接口通进行转发。
+        </p>
+      </section>
+
+      <h2 class="section-title">准备信息</h2>
+      <section class="quick-grid">
+        <article class="card">
+          <h3>你需要准备什么</h3>
+          <ul>
+            <li>一个可登录的接口通账号</li>
+            <li>一个可用的 CC Switch 客户端</li>
+            <li>接口通中可创建令牌的权限</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>最终要填进 CC Switch 的两项内容</h3>
+          <ul>
+            <li>API Key：接口通生成的 <code>sk-...</code> 密钥</li>
+            <li>请求地址：<code>https://apirouter.ai</code></li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>特别注意</h3>
+          <ul>
+            <li>请求地址不要以斜杠结尾</li>
+            <li>不要把令牌名称误填到 API Key 位置</li>
+            <li>如果有 Claude 专用分组，优先选支持 Claude 的分组</li>
+          </ul>
+        </article>
+      </section>
+
+      <h2 class="section-title">操作步骤</h2>
+      <section class="steps">
+        <article class="card">
+          <h3><span class="step-number">1</span>下载并安装 CC Switch</h3>
+          <p>
+            打开
+            <a href="https://github.com/farion1231/cc-switch" target="_blank" rel="noopener noreferrer">
+              CC Switch 的 GitHub 仓库
+            </a>
+            ，进入右侧或页面顶部的 <strong>Releases</strong>，下载适合自己系统的最新版本。
+          </p>
+          <div class="field-list">
+            <div class="field">
+              <strong>Windows</strong> 推荐下载 <code>CC-Switch-v{version}-Windows.msi</code> 安装包；
+              如果不想安装，也可以下载 <code>CC-Switch-v{version}-Windows-Portable.zip</code> 便携版。
+            </div>
+            <div class="field">
+              <strong>macOS</strong> 推荐使用 Homebrew 安装：
+              <code>brew tap farion1231/ccswitch</code>，然后执行
+              <code>brew install --cask cc-switch</code>；也可以在 Releases 下载
+              <code>CC-Switch-v{version}-macOS.dmg</code>。
+            </div>
+            <div class="field">
+              <strong>Linux</strong> 按发行版选择 <code>.deb</code>、<code>.rpm</code> 或通用的
+              <code>AppImage</code> 文件。Arch Linux 用户可以使用
+              <code>paru -S cc-switch-bin</code> 安装。
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              安装完成后先打开 CC Switch，确认能进入主界面。首次启动时，如果你本机已有
+              Claude Code 或 Codex 的配置，可以按软件提示导入现有配置；如果没有，后续直接新建供应商即可。
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><span class="step-number">2</span>进入接口通的令牌管理页面</h3>
+          <p>
+            登录接口通后，在左侧菜单找到 <strong>令牌管理</strong>，点击页面中的
+            <strong>添加令牌</strong> 按钮，开始创建一个新的访问令牌。
+          </p>
+          <figure class="shot">
+            <svg viewBox="0 0 1100 520" role="img" aria-label="接口通令牌管理页面截图示意">
+              <rect width="1100" height="520" fill="#ffffff" />
+              <rect x="0" y="0" width="1100" height="48" fill="#ffffff" stroke="#edf0f4" />
+              <circle cx="22" cy="24" r="11" fill="#7c3aed" />
+              <circle cx="28" cy="24" r="11" fill="#22d3ee" opacity="0.82" />
+              <text x="48" y="31" fill="#111827" font-size="18" font-weight="700">接口通</text>
+              <text x="110" y="31" fill="#111827" font-size="15" font-weight="700">首页</text>
+              <text x="164" y="31" fill="#111827" font-size="15" font-weight="700">控制台</text>
+              <text x="236" y="31" fill="#111827" font-size="15" font-weight="700">模型广场</text>
+              <text x="326" y="31" fill="#111827" font-size="15" font-weight="700">文档</text>
+              <text x="380" y="31" fill="#111827" font-size="15" font-weight="700">价格</text>
+              <text x="433" y="31" fill="#111827" font-size="15" font-weight="700">关于</text>
+              <text x="492" y="31" fill="#111827" font-size="15" font-weight="700">联系我们</text>
+              <rect x="0" y="48" width="130" height="472" fill="#ffffff" stroke="#edf0f4" />
+              <text x="14" y="91" fill="#9ca3af" font-size="13">聊天</text>
+              <text x="30" y="116" fill="#111827" font-size="15">操练场</text>
+              <text x="14" y="155" fill="#9ca3af" font-size="13">控制台</text>
+              <text x="30" y="183" fill="#111827" font-size="15">数据看板</text>
+              <rect x="8" y="200" width="116" height="28" rx="8" fill="#e8f3ff" />
+              <text x="30" y="219" fill="#0062ff" font-size="15" font-weight="700">令牌管理</text>
+              <ellipse cx="66" cy="214" rx="58" ry="20" fill="none" stroke="#ef4444" stroke-width="3" />
+              <text x="30" y="252" fill="#111827" font-size="15">使用日志</text>
+              <text x="30" y="286" fill="#111827" font-size="15">绘图日志</text>
+              <rect x="150" y="78" width="930" height="390" rx="10" fill="#ffffff" stroke="#e5e7eb" />
+              <text x="166" y="105" fill="#111827" font-size="16" font-weight="700">令牌管理</text>
+              <line x1="150" y1="124" x2="1080" y2="124" stroke="#edf0f4" />
+              <rect x="166" y="139" width="72" height="28" rx="14" fill="#f3f4f6" />
+              <text x="180" y="158" fill="#0062ff" font-size="14" font-weight="700">添加令牌</text>
+              <ellipse cx="202" cy="153" rx="45" ry="29" fill="none" stroke="#ef4444" stroke-width="3" />
+              <rect x="248" y="139" width="96" height="28" rx="14" fill="#f3f4f6" />
+              <text x="262" y="158" fill="#4b5563" font-size="14" font-weight="700">复制所选令牌</text>
+              <rect x="360" y="139" width="104" height="28" rx="14" fill="#fff1f2" />
+              <text x="374" y="158" fill="#ef4444" font-size="14" font-weight="700">删除所选令牌</text>
+              <rect x="742" y="139" width="145" height="28" rx="10" fill="#f3f4f6" />
+              <text x="770" y="158" fill="#9ca3af" font-size="14">搜索关键字</text>
+              <rect x="896" y="139" width="145" height="28" rx="10" fill="#f3f4f6" />
+              <text x="932" y="158" fill="#9ca3af" font-size="14">密钥</text>
+              <line x1="150" y1="180" x2="1080" y2="180" stroke="#edf0f4" />
+              <text x="198" y="203" fill="#6b7280" font-size="14">名称</text>
+              <text x="278" y="203" fill="#6b7280" font-size="14">状态</text>
+              <text x="355" y="203" fill="#6b7280" font-size="14">剩余额度/总额度</text>
+              <text x="510" y="203" fill="#6b7280" font-size="14">分组</text>
+              <text x="606" y="203" fill="#6b7280" font-size="14">密钥</text>
+              <text x="765" y="203" fill="#6b7280" font-size="14">可用模型</text>
+              <line x1="150" y1="219" x2="1080" y2="219" stroke="#edf0f4" />
+              <text x="198" y="245" fill="#111827" font-size="15">测试</text>
+              <rect x="278" y="228" width="48" height="22" rx="11" fill="#dcfce7" />
+              <text x="288" y="244" fill="#15803d" font-size="13">已启用</text>
+              <text x="355" y="245" fill="#111827" font-size="15">$1.00 / $1.00</text>
+              <line x1="355" y1="254" x2="432" y2="254" stroke="#22c55e" stroke-width="4" stroke-linecap="round" />
+              <rect x="510" y="228" width="52" height="22" rx="9" fill="#dbeafe" />
+              <text x="520" y="244" fill="#0369a1" font-size="13">default</text>
+              <rect x="606" y="228" width="150" height="25" rx="9" fill="#f3f4f6" />
+              <text x="620" y="246" fill="#111827" font-size="14">sk-YTke*********tKc</text>
+              <rect x="765" y="228" width="56" height="22" rx="11" fill="#ffffff" stroke="#d1d5db" />
+              <text x="778" y="244" fill="#4b5563" font-size="13">无限制</text>
+            </svg>
+            <figcaption>图 1：在左侧进入“令牌管理”，然后点击“添加令牌”。</figcaption>
+          </figure>
+          <div class="callout">
+            <p>
+              这一页的核心目标只有一个：生成一条后面可以复制到 CC Switch 的
+              <code>sk-...</code> 密钥。
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><span class="step-number">3</span>填写令牌基础信息</h3>
+          <p>在“创建新的令牌”窗口中，优先填写以下几个字段：</p>
+          <figure class="shot">
+            <svg viewBox="0 0 1100 520" role="img" aria-label="创建新的令牌窗口截图示意">
+              <rect width="1100" height="520" fill="#8b8f97" opacity="0.42" />
+              <rect x="18" y="16" width="360" height="488" rx="14" fill="#ffffff" stroke="#e5e7eb" />
+              <rect x="34" y="26" width="38" height="18" rx="9" fill="#dcfce7" />
+              <text x="43" y="40" fill="#15803d" font-size="12" font-weight="700">新建</text>
+              <text x="86" y="42" fill="#111827" font-size="20" font-weight="800">创建新的令牌</text>
+              <text x="348" y="42" fill="#4b5563" font-size="22">×</text>
+              <line x1="18" y1="66" x2="378" y2="66" stroke="#edf0f4" />
+              <rect x="34" y="84" width="328" height="86" rx="10" fill="#ffffff" stroke="#e5e7eb" />
+              <circle cx="54" cy="110" r="16" fill="#60a5fa" />
+              <text x="82" y="106" fill="#111827" font-size="15" font-weight="700">基本信息</text>
+              <text x="82" y="126" fill="#6b7280" font-size="12">设置令牌的基本信息</text>
+              <text x="34" y="192" fill="#111827" font-size="14" font-weight="700">名称 *</text>
+              <rect x="34" y="204" width="328" height="30" rx="8" fill="#f3f4f6" />
+              <text x="44" y="224" fill="#9ca3af" font-size="13">请输入名称</text>
+              <text x="34" y="266" fill="#111827" font-size="14" font-weight="700">令牌分组</text>
+              <rect x="34" y="278" width="328" height="34" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+              <text x="45" y="300" fill="#6b7280" font-size="13">令牌分组，默认为用户的分组</text>
+              <circle cx="348" cy="295" r="9" fill="#9ca3af" />
+              <text x="344" y="300" fill="#ffffff" font-size="14" font-weight="700">×</text>
+              <rect x="34" y="312" width="328" height="166" rx="8" fill="#ffffff" stroke="#e5e7eb" />
+              <rect x="34" y="312" width="328" height="42" fill="#f9fafb" />
+              <text x="48" y="338" fill="#111827" font-size="14" font-weight="700">codex-tokens</text>
+              <text x="48" y="357" fill="#6b7280" font-size="12">自研平台</text>
+              <rect x="306" y="323" width="38" height="18" rx="4" fill="#dcfce7" />
+              <text x="314" y="337" fill="#15803d" font-size="12">1x 倍率</text>
+              <text x="48" y="392" fill="#111827" font-size="14" font-weight="700">default</text>
+              <text x="48" y="411" fill="#6b7280" font-size="12">全部可用</text>
+              <rect x="304" y="378" width="42" height="18" rx="4" fill="#dbeafe" />
+              <text x="312" y="392" fill="#2563eb" font-size="12">2x 倍率</text>
+              <text x="48" y="445" fill="#111827" font-size="14" font-weight="700">enterprise-claude</text>
+              <text x="48" y="464" fill="#6b7280" font-size="12">企业专线稳定cc</text>
+              <rect x="294" y="431" width="52" height="18" rx="4" fill="#dbeafe" />
+              <text x="302" y="445" fill="#2563eb" font-size="12">2.8x 倍率</text>
+              <rect x="354" y="355" width="5" height="105" rx="2.5" fill="#b8bec8" />
+              <text x="410" y="126" fill="#ffffff" font-size="18" font-weight="700">选择支持 Claude 的令牌分组</text>
+              <path d="M404 146 C354 172 340 238 354 278" fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round" />
+              <path d="M354 278 L344 260 L366 264 Z" fill="#ef4444" />
+            </svg>
+            <figcaption>图 2：创建令牌时选择可用分组，推荐选择支持 Claude 的分组。</figcaption>
+          </figure>
+          <div class="field-list">
+            <div class="field">
+              <strong>名称</strong> 给令牌起一个容易辨认的名字，例如
+              <code>cc-switch</code> 或 <code>我的 Claude 令牌</code>。
+            </div>
+            <div class="field">
+              <strong>令牌分组</strong> 选择一个支持 Claude 的分组。若你的平台有
+              Claude 专用分组，优先选择它；如果没有，选择管理员为你开放的可用分组。
+            </div>
+            <div class="field">
+              <strong>无限额度</strong> 如果你希望先快速接入，可以保持开启；如果你的账号有额度管理要求，再按实际策略调整。
+            </div>
+            <div class="field">
+              <strong>模型限制列表</strong> 一般可先留空，表示继承当前分组可用模型；只有你明确只想限制某些模型时再配置。
+            </div>
+          </div>
+          <div class="callout warn">
+            <p>
+              如果你选择了不支持 Claude 的分组，后续在 CC Switch 中即使填对了
+              API Key 和地址，也可能无法正常调用 Claude。
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><span class="step-number">4</span>创建并复制 SK 密钥</h3>
+          <p>
+            令牌创建完成后，你会在令牌管理列表里看到一条新的密钥记录。找到对应行中的
+            <code>sk-...</code> 字段，点击复制按钮，把整串密钥复制出来备用。
+          </p>
+          <ul>
+            <li>你后面要填进 CC Switch 的就是这条完整密钥</li>
+            <li>不要只复制令牌名称，也不要漏掉前缀 <code>sk-</code></li>
+            <li>复制后建议先保存在临时安全位置，避免重复查找</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h3><span class="step-number">5</span>在 CC Switch 中添加新供应商</h3>
+          <p>
+            打开 CC Switch，进入“添加新供应商”页面。按截图所示，把接口通作为一个新的服务提供方填进去。
+          </p>
+          <figure class="shot">
+            <svg viewBox="0 0 1100 560" role="img" aria-label="CC Switch 添加新供应商截图示意">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+                </marker>
+              </defs>
+              <rect width="1100" height="560" fill="#ffffff" />
+              <rect x="0" y="0" width="1100" height="48" fill="#ffffff" stroke="#edf0f4" />
+              <circle cx="22" cy="24" r="11" fill="#7c3aed" />
+              <circle cx="28" cy="24" r="11" fill="#22d3ee" opacity="0.82" />
+              <text x="48" y="31" fill="#111827" font-size="18" font-weight="700">接口通</text>
+              <text x="110" y="31" fill="#111827" font-size="15" font-weight="700">首页</text>
+              <text x="164" y="31" fill="#111827" font-size="15" font-weight="700">控制台</text>
+              <rect x="0" y="48" width="130" height="512" fill="#ffffff" stroke="#edf0f4" />
+              <text x="30" y="145" fill="#111827" font-size="15">数据看板</text>
+              <rect x="8" y="164" width="116" height="28" rx="8" fill="#e8f3ff" />
+              <text x="30" y="183" fill="#0062ff" font-size="15" font-weight="700">令牌管理</text>
+              <rect x="150" y="82" width="930" height="272" rx="10" fill="#ffffff" stroke="#e5e7eb" />
+              <text x="166" y="110" fill="#111827" font-size="16" font-weight="700">令牌管理</text>
+              <line x1="150" y1="128" x2="1080" y2="128" stroke="#edf0f4" />
+              <rect x="166" y="143" width="72" height="28" rx="14" fill="#f3f4f6" />
+              <text x="180" y="162" fill="#0062ff" font-size="14" font-weight="700">添加令牌</text>
+              <line x1="150" y1="180" x2="1080" y2="180" stroke="#edf0f4" />
+              <text x="198" y="204" fill="#6b7280" font-size="14">名称</text>
+              <text x="510" y="204" fill="#6b7280" font-size="14">分组</text>
+              <text x="606" y="204" fill="#6b7280" font-size="14">密钥</text>
+              <line x1="150" y1="220" x2="1080" y2="220" stroke="#edf0f4" />
+              <text x="198" y="247" fill="#111827" font-size="15">测试</text>
+              <rect x="510" y="230" width="52" height="22" rx="9" fill="#dbeafe" />
+              <text x="520" y="246" fill="#0369a1" font-size="13">default</text>
+              <rect x="606" y="230" width="150" height="25" rx="9" fill="#f3f4f6" />
+              <text x="620" y="248" fill="#111827" font-size="14">sk-YTke*********tKc</text>
+              <circle cx="766" cy="242" r="8" fill="#e5e7eb" />
+              <rect x="210" y="178" width="720" height="350" rx="16" fill="#ffffff" stroke="#e5e7eb" filter="drop-shadow(0 14px 24px rgba(15,23,42,.18))" />
+              <circle cx="230" cy="196" r="5" fill="#e5e7eb" stroke="#9ca3af" />
+              <circle cx="246" cy="196" r="5" fill="#e5e7eb" stroke="#9ca3af" />
+              <circle cx="262" cy="196" r="5" fill="#e5e7eb" stroke="#9ca3af" />
+              <rect x="232" y="218" width="28" height="28" rx="8" fill="#ffffff" stroke="#e5e7eb" />
+              <text x="270" y="238" fill="#111827" font-size="19" font-weight="800">添加新供应商</text>
+              <line x1="232" y1="260" x2="908" y2="260" stroke="#edf0f4" />
+              <text x="252" y="309" fill="#111827" font-size="14" font-weight="700">供应商名称</text>
+              <rect x="252" y="320" width="320" height="34" rx="7" fill="#ffffff" stroke="#dfe5ee" />
+              <text x="266" y="342" fill="#111827" font-size="14">接口通</text>
+              <text x="586" y="309" fill="#111827" font-size="14" font-weight="700">备注</text>
+              <rect x="586" y="320" width="300" height="34" rx="7" fill="#ffffff" stroke="#dfe5ee" />
+              <text x="600" y="342" fill="#9ca3af" font-size="14">例如：公司专用账号</text>
+              <text x="252" y="386" fill="#111827" font-size="14" font-weight="700">API Key</text>
+              <rect x="252" y="398" width="634" height="34" rx="7" fill="#ffffff" stroke="#dfe5ee" />
+              <text x="266" y="420" fill="#9ca3af" font-size="14">只需要填这里，下方配置会自动填充</text>
+              <text x="252" y="468" fill="#111827" font-size="14" font-weight="700">请求地址</text>
+              <rect x="252" y="480" width="634" height="34" rx="7" fill="#ffffff" stroke="#f59e0b" />
+              <text x="424" y="503" fill="#ef4444" font-size="22">https://apirouter.ai</text>
+              <rect x="252" y="518" width="634" height="28" rx="7" fill="#fffbeb" stroke="#fde68a" />
+              <text x="266" y="537" fill="#b45309" font-size="13">填写兼容 Claude API 的服务端点地址，不要以斜杠结尾</text>
+              <path d="M 690 252 C 670 308 640 350 560 397" fill="none" stroke="#ef4444" stroke-width="5" marker-end="url(#arrow)" />
+              <text x="612" y="374" fill="#ef4444" font-size="15" font-weight="700">复制 SK 到这里</text>
+            </svg>
+            <figcaption>图 3：在 CC Switch 中添加“接口通”供应商，API Key 填 SK，请求地址填 <code>https://apirouter.ai</code>。</figcaption>
+          </figure>
+          <div class="field-list">
+            <div class="field">
+              <strong>供应商名称</strong> 可填写 <code>接口通</code>，也可以填你习惯识别的名称。
+            </div>
+            <div class="field">
+              <strong>API Key</strong> 粘贴刚刚从接口通复制出来的完整
+              <code>sk-...</code> 密钥。
+            </div>
+            <div class="field">
+              <strong>请求地址</strong> 填写
+              <code>https://apirouter.ai</code>
+            </div>
+          </div>
+          <div class="callout">
+            <p>
+              请求地址请直接填写 <code>https://apirouter.ai</code>，不要额外补
+              <code>/v1</code>，也不要在最后加 <code>/</code>。
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3><span class="step-number">6</span>保存并测试</h3>
+          <p>
+            完成填写后，点击 CC Switch 的“添加”或保存按钮。保存成功后，尝试发起一次 Claude
+            请求，确认接口通已被成功接入。
+          </p>
+          <ul>
+            <li>如果能正常返回回复，说明接入完成</li>
+            <li>如果报认证错误，优先检查 API Key 是否完整</li>
+            <li>如果报模型不可用，优先检查接口通令牌分组是否支持 Claude</li>
+          </ul>
+        </article>
+      </section>
+
+      <h2 class="section-title">推荐填写模板</h2>
+      <section class="card">
+        <div class="field-list">
+          <div class="field">
+            <strong>供应商名称</strong> <code>接口通</code>
+          </div>
+          <div class="field">
+            <strong>API Key</strong> <code>sk-xxxxxxxxxxxxxxxx</code>
+          </div>
+          <div class="field">
+            <strong>请求地址</strong> <code>https://apirouter.ai</code>
+          </div>
+        </div>
+      </section>
+
+      <h2 class="section-title">常见问题</h2>
+      <section class="faq">
+        <article class="card">
+          <h3>为什么我填了地址还是连不上？</h3>
+          <p>
+            先确认请求地址是否严格填写为
+            <code>https://apirouter.ai</code>。最常见的问题是地址后面多了斜杠，或者误填成了别的域名。
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>为什么 API Key 正确，但 Claude 还是不可用？</h3>
+          <p>
+            这通常不是密钥格式问题，而是令牌所在分组没有开放 Claude 模型。回到接口通，检查你创建令牌时选择的分组是否支持 Claude。
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>模型限制列表要不要填？</h3>
+          <p>
+            如果你只是为了尽快接入 CC Switch，建议先不填。等接入成功后，再按实际需要限制模型范围。
+          </p>
+        </article>
+      </section>
+
+      <p class="footer">
+        完成以上步骤后，你就已经把接口通成功接入到 CC Switch 中了。
+      </p>
+    </main>
+  </body>
+</html>

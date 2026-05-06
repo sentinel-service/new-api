@@ -28,6 +28,7 @@ export const useNavigation = (t, docsLink, headerNavModules) => {
       pricing: true,
       price: true,
       docs: true,
+      ccSwitch: true,
       about: true,
       contact: true,
     };
@@ -64,6 +65,13 @@ export const useNavigation = (t, docsLink, headerNavModules) => {
             },
           ]
         : []),
+      {
+        text: t('接入 Claude Code'),
+        itemKey: 'ccSwitch',
+        isExternal: true,
+        externalLink: '/docs/cc-switch-jiekoutong-guide.html',
+        externalSameWindow: true,
+      },
       {
         text: t('价格'),
         itemKey: 'price',
