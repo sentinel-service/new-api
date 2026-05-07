@@ -71,9 +71,9 @@ const whyCards = [
   {
     icon: '🏢',
     iconClass: 'ent',
-    title: '上市公司信赖',
-    desc: '已为多家A股和港股上市公司提供稳定的AI大模型接口服务，经受住了真实业务场景的严苛考验。企业级客户的选择，就是最好的背书。',
-    highlight: '多家上市公司合作伙伴',
+    title: '企业客户信赖',
+    desc: '已为多家企业级客户提供稳定的AI大模型接口服务，经受住了真实业务场景的严苛考验，企业级客户的选择，就是最好的背书。',
+    highlight: '多家企业级客户合作伙伴',
   },
   {
     icon: '🛡️',
@@ -948,7 +948,7 @@ print(response.choices[0].message.content)`,
                     {t('级别。')}
                     <br />
                     {t(
-                      '为多家上市公司提供稳定的AI中转接口服务，支持 Claude、Gemini、GPT 等全球主流大模型。',
+                      '为多家企业级客户提供稳定的AI中转接口服务，支持 Claude、Gemini、GPT 等全球主流大模型。',
                     )}
                   </p>
                   <div className='home-actions home-reveal'>
@@ -956,7 +956,7 @@ print(response.choices[0].message.content)`,
                       <Button>{t('立即接入')}</Button>
                     </Link>
                     <Link to='/login' className='home-secondary-btn'>
-                      <Button>{t('免费试用')}</Button>
+                      <Button>{t('马上试用')}</Button>
                     </Link>
                   </div>
                   <div className='home-demo-grid'>
@@ -1136,14 +1136,14 @@ print(response.choices[0].message.content)`,
                   {t('了吗？')}
                 </h2>
                 <p className='home-reveal'>
-                  {t('免费试用，分钟级接入。专属客服一对一指导。')}
+                  {t('马上试用，分钟级接入。专属客服指导。')}
                 </p>
                 <div className='home-cta-actions home-reveal'>
                   <Link to='/login' className='home-primary-btn'>
                     <Button>{t('立即接入')}</Button>
                   </Link>
                   <Link to='/login' className='home-secondary-btn'>
-                    <Button>{t('免费试用')}</Button>
+                    <Button>{t('马上试用')}</Button>
                   </Link>
                 </div>
               </div>
