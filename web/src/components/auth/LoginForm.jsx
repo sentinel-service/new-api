@@ -696,7 +696,7 @@ const LoginForm = () => {
                 </div>
               )}
 
-              {!status.self_use_mode_enabled && (
+              {/* {!status.self_use_mode_enabled && (
                 <div className='mt-6 text-center text-sm'>
                   <Text>
                     {t('没有账户？')}{' '}
@@ -708,7 +708,7 @@ const LoginForm = () => {
                     </Link>
                   </Text>
                 </div>
-              )}
+              )} */}
             </div>
           </Card>
         </div>
@@ -849,7 +849,7 @@ const LoginForm = () => {
                 </>
               )}
 
-              {!status.self_use_mode_enabled && (
+              {/* {!status.self_use_mode_enabled && (
                 <div className='mt-6 text-center text-sm'>
                   <Text>
                     {t('没有账户？')}{' '}
@@ -861,7 +861,7 @@ const LoginForm = () => {
                     </Link>
                   </Text>
                 </div>
-              )}
+              )} */}
             </div>
           </Card>
         </div>
