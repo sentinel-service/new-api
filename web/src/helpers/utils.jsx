@@ -48,6 +48,9 @@ export function isRoot() {
 
 export function getSystemName() {
   let system_name = localStorage.getItem('system_name');
+  if (system_name === '接口通' || system_name === '接口通AI') {
+    return 'API Router';
+  }
   if (!system_name) return 'New API';
   return system_name;
 }

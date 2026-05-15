@@ -23,8 +23,6 @@ import {
   copy,
   showError,
   showNotice,
-  getLogo,
-  getSystemName,
 } from '../../helpers';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Button, Card, Form, Typography, Banner } from '@douyinfe/semi-ui';
@@ -48,9 +46,6 @@ const PasswordResetConfirm = () => {
   const [newPassword, setNewPassword] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const [formApi, setFormApi] = useState(null);
-
-  const logo = getLogo();
-  const systemName = getSystemName();
 
   useEffect(() => {
     let token = searchParams.get('token');
@@ -117,13 +112,6 @@ const PasswordResetConfirm = () => {
       <div className='w-full max-w-sm mt-[60px]'>
         <div className='flex flex-col items-center'>
           <div className='w-full max-w-md'>
-            <div className='flex items-center justify-center mb-6 gap-2'>
-              <img src={logo} alt='Logo' className='h-10 rounded-full' />
-              <Title heading={3} className='!text-gray-800'>
-                {systemName}
-              </Title>
-            </div>
-
             <Card className='border-0 !rounded-2xl overflow-hidden'>
               <div className='flex justify-center pt-6 pb-2'>
                 <Title heading={3} className='text-gray-800 dark:text-gray-200'>

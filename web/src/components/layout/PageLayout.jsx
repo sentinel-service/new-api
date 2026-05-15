@@ -107,12 +107,9 @@ const PageLayout = () => {
     if (systemName) {
       document.title = systemName;
     }
-    let logo = getLogo();
-    if (logo) {
-      let linkElement = document.querySelector("link[rel~='icon']");
-      if (linkElement) {
-        linkElement.href = logo;
-      }
+    let linkElement = document.querySelector("link[rel~='icon']");
+    if (linkElement) {
+      linkElement.href = '/favicon.png';
     }
   }, []);
 
