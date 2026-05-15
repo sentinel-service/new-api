@@ -52,11 +52,8 @@ import SetupCheck from './components/layout/SetupCheck';
 const Home = lazy(() => import('./pages/Home'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const About = lazy(() => import('./pages/About'));
-const Price = lazy(() => import('./pages/Price'));
 const UserAgreement = lazy(() => import('./pages/UserAgreement'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
-const PrivacyAgreement = lazy(() => import('./pages/PrivacyAgreement'));
-const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const Contact = lazy(() => import('./pages/Contact'));
 
 function DynamicOAuth2Callback() {
@@ -316,16 +313,6 @@ function App() {
           }
         />
         <Route
-          path='/cashier'
-          element={
-            <PrivateRoute>
-              <Suspense fallback={<Loading></Loading>} key={location.pathname}>
-                <Price />
-              </Suspense>
-            </PrivateRoute>
-          }
-        />
-        <Route
           path='/user-agreement'
           element={
             <Suspense fallback={<Loading></Loading>} key={location.pathname}>
@@ -347,24 +334,6 @@ function App() {
           element={
             <Suspense fallback={<Loading></Loading>} key={location.pathname}>
               <PrivacyPolicy />
-            </Suspense>
-          }
-        />
-        {/* 新增：避免与内置隐私政策冲突的自定义隐私协议 */}
-        <Route
-          path='/privacy-agreement'
-          element={
-            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
-              <PrivacyAgreement />
-            </Suspense>
-          }
-        />
-        {/* 新增：服务条款页面 */}
-        <Route
-          path='/terms-of-service'
-          element={
-            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
-              <TermsOfService />
             </Suspense>
           }
         />

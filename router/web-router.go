@@ -18,7 +18,6 @@ func redirectAnonymousProtectedWebPages() gin.HandlerFunc {
 	protectedPaths := map[string]bool{
 		"/":                                     true,
 		"/pricing":                              true,
-		"/cashier":                              true,
 		"/docs/cc-switch-jiekoutong-guide.html": true,
 	}
 
@@ -49,6 +48,19 @@ func SetWebRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
 		c.Set(middleware.RouteTagKey, "web")
 		if strings.HasPrefix(c.Request.RequestURI, "/v1") || strings.HasPrefix(c.Request.RequestURI, "/api") || strings.HasPrefix(c.Request.RequestURI, "/assets") {
 			controller.RelayNotFound(c)
+			return
+		}
+		blockedPaths := map[string]bool{
+			"/cashier":           true,
+			"/terms-of-service":  true,
+			"/privacy-agreement": true,
+		}
+		requestPath := c.Request.URL.Path
+		if requestPath != "/" {
+			requestPath = strings.TrimRight(requestPath, "/")
+		}
+		if blockedPaths[requestPath] {
+			c.AbortWithStatus(http.StatusNotFound)
 			return
 		}
 		c.Header("Cache-Control", "no-cache")

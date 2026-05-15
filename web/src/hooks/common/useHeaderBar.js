@@ -37,9 +37,7 @@ export const useHeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
   const [collapsed, toggleCollapsed] = useSidebarCollapsed();
   const [logoLoaded, setLogoLoaded] = useState(false);
   const navigate = useNavigate();
-  const [currentLang, setCurrentLang] = useState(
-    normalizeLanguage(i18n.language),
-  );
+  const [currentLang, setCurrentLang] = useState('en');
   const location = useLocation();
 
   const loading = statusState?.status === undefined;
@@ -124,8 +122,7 @@ export const useHeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
   // Language change effect
   useEffect(() => {
     const handleLanguageChanged = (lng) => {
-      const normalizedLang = normalizeLanguage(lng);
-      setCurrentLang(normalizedLang);
+      setCurrentLang(normalizeLanguage(lng));
       try {
         const iframe = document.querySelector('iframe');
         const cw = iframe && iframe.contentWindow;
@@ -153,21 +150,16 @@ export const useHeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
   }, [navigate, t, userDispatch]);
 
   const handleLanguageChange = useCallback(
-    async (lang) => {
-      // Change language immediately for responsive UX
-      const previousLang = normalizeLanguage(i18n.language);
-      i18n.changeLanguage(lang);
-      localStorage.setItem('i18nextLng', lang);
+    async () => {
+      i18n.changeLanguage('en');
+      localStorage.setItem('i18nextLng', 'en');
 
-      // If user is logged in, save preference to backend
       if (userState?.user?.id) {
         try {
           const res = await API.put('/api/user/self', {
-            language: lang,
+            language: 'en',
           });
           if (res.data.success) {
-            // Keep user preference and local cache in sync so route changes
-            // don't reapply an older remembered language.
             let settings = {};
             if (userState?.user?.setting) {
               try {
@@ -177,7 +169,7 @@ export const useHeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
               }
             }
 
-            settings.language = lang;
+            settings.language = 'en';
             const nextUser = {
               ...userState.user,
               setting: JSON.stringify(settings),
@@ -190,10 +182,6 @@ export const useHeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
             localStorage.setItem('user', JSON.stringify(nextUser));
           }
         } catch (error) {
-          if (previousLang) {
-            i18n.changeLanguage(previousLang);
-            localStorage.setItem('i18nextLng', previousLang);
-          }
           console.error('Failed to save language preference:', error);
         }
       }
