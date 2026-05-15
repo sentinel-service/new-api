@@ -9,14 +9,41 @@ import (
 	"github.com/QuantumNous/new-api/controller"
 	"github.com/QuantumNous/new-api/middleware"
 	"github.com/gin-contrib/gzip"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
+
+func redirectAnonymousProtectedWebPages() gin.HandlerFunc {
+	protectedPaths := map[string]bool{
+		"/":                                     true,
+		"/pricing":                              true,
+		"/cashier":                              true,
+		"/docs/cc-switch-jiekoutong-guide.html": true,
+	}
+
+	return func(c *gin.Context) {
+		requestPath := c.Request.URL.Path
+		if requestPath != "/" {
+			requestPath = strings.TrimRight(requestPath, "/")
+		}
+
+		if protectedPaths[requestPath] && sessions.Default(c).Get("id") == nil {
+			c.Header("Cache-Control", "no-cache")
+			c.Redirect(http.StatusFound, "/login")
+			c.Abort()
+			return
+		}
+
+		c.Next()
+	}
+}
 
 func SetWebRouter(router *gin.Engine, buildFS embed.FS, indexPage []byte) {
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
 	router.Use(middleware.GlobalWebRateLimit())
 	router.Use(middleware.Cache())
+	router.Use(redirectAnonymousProtectedWebPages())
 	router.Use(static.Serve("/", common.EmbedFolder(buildFS, "web/dist")))
 	router.NoRoute(func(c *gin.Context) {
 		c.Set(middleware.RouteTagKey, "web")

@@ -43,6 +43,7 @@ const HeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
     docsLink,
     isDemoSiteMode,
     isConsoleRoute,
+    isAuthenticated,
     theme,
     headerNavModules,
     pricingRequireAuth,
@@ -104,6 +105,7 @@ const HeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
             isMobile={isMobile}
             isLoading={isLoading}
             userState={userState}
+            isAuthenticated={isAuthenticated}
             pricingRequireAuth={pricingRequireAuth}
           />
 

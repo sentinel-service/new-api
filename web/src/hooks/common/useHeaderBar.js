@@ -37,7 +37,9 @@ export const useHeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
   const [collapsed, toggleCollapsed] = useSidebarCollapsed();
   const [logoLoaded, setLogoLoaded] = useState(false);
   const navigate = useNavigate();
-  const [currentLang, setCurrentLang] = useState(normalizeLanguage(i18n.language));
+  const [currentLang, setCurrentLang] = useState(
+    normalizeLanguage(i18n.language),
+  );
   const location = useLocation();
 
   const loading = statusState?.status === undefined;
@@ -89,6 +91,9 @@ export const useHeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
   }, [headerNavModules]);
 
   const isConsoleRoute = location.pathname.startsWith('/console');
+  const isAuthenticated = Boolean(
+    userState?.user || localStorage.getItem('user'),
+  );
 
   const theme = useTheme();
   const actualTheme = useActualTheme();
@@ -234,6 +239,7 @@ export const useHeaderBar = ({ onMobileMenuToggle, drawerOpen }) => {
     docsLink,
     isDemoSiteMode,
     isConsoleRoute,
+    isAuthenticated,
     theme,
     drawerOpen,
     headerNavModules,

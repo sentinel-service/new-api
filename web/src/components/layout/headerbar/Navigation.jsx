@@ -26,8 +26,13 @@ const Navigation = ({
   isMobile,
   isLoading,
   userState,
+  isAuthenticated,
   pricingRequireAuth,
 }) => {
+  if (!isAuthenticated) {
+    return null;
+  }
+
   const renderNavLinks = () => {
     const baseClasses =
       'flex-shrink-0 flex items-center gap-1 font-semibold rounded-md transition-all duration-200 ease-in-out';
