@@ -47,9 +47,9 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            carlc123/new-api:alpha
-            carlc123/new-api:${{ steps.version.outputs.value }}
-            carlc123/new-api:latest
+            borderwalker/new-api:alpha
+            borderwalker/new-api:${{ steps.version.outputs.value }}
+            borderwalker/new-api:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: false

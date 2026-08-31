@@ -16,7 +16,7 @@ version: '3.4' # For compatibility with older Docker versions
 
 services:
   new-api:
-    image: carlc123/new-api:alpha
+    image: borderwalker/new-api:alpha
     # build: .
     container_name: new-api
     restart: always
