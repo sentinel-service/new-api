@@ -19,11 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 
 export function setStatusData(data) {
   localStorage.setItem('status', JSON.stringify(data));
-  const systemName =
-    data.system_name === '接口通' || data.system_name === '接口通AI'
-      ? 'API Router'
-      : data.system_name;
-  localStorage.setItem('system_name', systemName);
+  localStorage.setItem('system_name', data.system_name);
   localStorage.setItem('logo', data.logo);
   localStorage.setItem('footer_html', data.footer_html);
   localStorage.setItem('quota_per_unit', data.quota_per_unit);

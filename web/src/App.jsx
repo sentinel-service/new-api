@@ -17,7 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useContext, useMemo } from 'react';
 import { Route, Routes, useLocation, useParams } from 'react-router-dom';
 import Loading from './components/common/ui/Loading';
 import User from './pages/User';
@@ -27,6 +27,7 @@ import LoginForm from './components/auth/LoginForm';
 import NotFound from './pages/NotFound';
 import Forbidden from './pages/Forbidden';
 import Setting from './pages/Setting';
+import { StatusContext } from './context/Status';
 
 import PasswordResetForm from './components/auth/PasswordResetForm';
 import PasswordResetConfirm from './components/auth/PasswordResetConfirm';
@@ -52,8 +53,11 @@ import SetupCheck from './components/layout/SetupCheck';
 const Home = lazy(() => import('./pages/Home'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const About = lazy(() => import('./pages/About'));
+const Price = lazy(() => import('./pages/Price'));
 const UserAgreement = lazy(() => import('./pages/UserAgreement'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const PrivacyAgreement = lazy(() => import('./pages/PrivacyAgreement'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const Contact = lazy(() => import('./pages/Contact'));
 
 function DynamicOAuth2Callback() {
@@ -63,6 +67,29 @@ function DynamicOAuth2Callback() {
 
 function App() {
   const location = useLocation();
+  const [statusState] = useContext(StatusContext);
+
+  // 获取模型广场权限配置
+  const pricingRequireAuth = useMemo(() => {
+    const headerNavModulesConfig = statusState?.status?.HeaderNavModules;
+    if (headerNavModulesConfig) {
+      try {
+        const modules = JSON.parse(headerNavModulesConfig);
+
+        // 处理向后兼容性：如果pricing是boolean，默认不需要登录
+        if (typeof modules.pricing === 'boolean') {
+          return false; // 默认不需要登录鉴权
+        }
+
+        // 如果是对象格式，使用requireAuth配置
+        return modules.pricing?.requireAuth === true;
+      } catch (error) {
+        console.error('解析顶栏模块配置失败:', error);
+        return false; // 默认不需要登录
+      }
+    }
+    return false; // 默认不需要登录
+  }, [statusState?.status?.HeaderNavModules]);
 
   return (
     <SetupCheck>
@@ -70,11 +97,9 @@ function App() {
         <Route
           path='/'
           element={
-            <PrivateRoute>
-              <Suspense fallback={<Loading></Loading>} key={location.pathname}>
-                <Home />
-              </Suspense>
-            </PrivateRoute>
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+              <Home />
+            </Suspense>
           }
         />
         <Route
@@ -297,11 +322,20 @@ function App() {
         <Route
           path='/pricing'
           element={
-            <PrivateRoute>
+            pricingRequireAuth ? (
+              <PrivateRoute>
+                <Suspense
+                  fallback={<Loading></Loading>}
+                  key={location.pathname}
+                >
+                  <Pricing />
+                </Suspense>
+              </PrivateRoute>
+            ) : (
               <Suspense fallback={<Loading></Loading>} key={location.pathname}>
                 <Pricing />
               </Suspense>
-            </PrivateRoute>
+            )
           }
         />
         <Route
@@ -313,6 +347,14 @@ function App() {
           }
         />
         <Route
+         path='/cashier'
+         element={
+           <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+             <Price />
+           </Suspense>
+         }
+       />
+       <Route
           path='/user-agreement'
           element={
             <Suspense fallback={<Loading></Loading>} key={location.pathname}>
@@ -334,6 +376,24 @@ function App() {
           element={
             <Suspense fallback={<Loading></Loading>} key={location.pathname}>
               <PrivacyPolicy />
+            </Suspense>
+          }
+        />
+        {/* 新增：避免与内置隐私政策冲突的自定义隐私协议 */}
+        <Route
+          path='/privacy-agreement'
+          element={
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+              <PrivacyAgreement />
+            </Suspense>
+          }
+        />
+        {/* 新增：服务条款页面 */}
+        <Route
+          path='/terms-of-service'
+          element={
+            <Suspense fallback={<Loading></Loading>} key={location.pathname}>
+              <TermsOfService />
             </Suspense>
           }
         />

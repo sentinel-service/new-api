@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 
 import React, { useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Avatar, Button, Dropdown, Typography } from '@douyinfe/semi-ui';
 import { ChevronDown } from 'lucide-react';
 import {
@@ -40,7 +40,6 @@ const UserArea = ({
   t,
 }) => {
   const dropdownRef = useRef(null);
-  const location = useLocation();
   if (isLoading) {
     return (
       <SkeletonWrapper
@@ -143,8 +142,7 @@ const UserArea = ({
       </div>
     );
   } else {
-    const showRegisterButton =
-      !isSelfUseMode && location.pathname !== '/login';
+    const showRegisterButton = !isSelfUseMode;
 
     const commonSizingAndLayoutClass =
       'flex items-center justify-center !py-[10px] !px-1.5';

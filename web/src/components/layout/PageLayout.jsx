@@ -107,9 +107,12 @@ const PageLayout = () => {
     if (systemName) {
       document.title = systemName;
     }
-    let linkElement = document.querySelector("link[rel~='icon']");
-    if (linkElement) {
-      linkElement.href = '/favicon.png';
+    let logo = getLogo();
+    if (logo) {
+      let linkElement = document.querySelector("link[rel~='icon']");
+      if (linkElement) {
+        linkElement.href = logo;
+      }
     }
   }, []);
 
@@ -215,7 +218,7 @@ const PageLayout = () => {
           >
             <App />
           </Content>
-          {/* {!shouldHideFooter && (
+          {!shouldHideFooter && (
             <Layout.Footer
               style={{
                 flex: '0 0 auto',
@@ -224,7 +227,7 @@ const PageLayout = () => {
             >
               <FooterBar />
             </Layout.Footer>
-          )} */}
+          )}
         </Layout>
       </Layout>
       <ToastContainer />
