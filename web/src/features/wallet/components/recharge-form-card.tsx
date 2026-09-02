@@ -16,7 +16,14 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { Gift, ExternalLink, Loader2, Receipt, WalletCards } from 'lucide-react'
+import {
+  CreditCard,
+  Gift,
+  ExternalLink,
+  Loader2,
+  Receipt,
+  WalletCards,
+} from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -142,6 +149,7 @@ export function RechargeFormCard({
     Array.isArray(waffoPayMethods) && waffoPayMethods.length > 0
   const minTopup = getMinTopupAmount(topupInfo)
   const redemptionEnabled = topupInfo?.enable_redemption !== false
+  const cashierUrl = topupLink?.trim() || '/cashier/'
 
   if (loading) {
     return (
@@ -202,17 +210,29 @@ export function RechargeFormCard({
       iconTone='success'
       disableHoverEffect
       action={
-        onOpenBilling ? (
+        <div className='flex w-full flex-wrap gap-2 sm:w-auto'>
           <Button
-            variant='outline'
             size='sm'
-            onClick={onOpenBilling}
-            className='w-full gap-2 sm:w-auto'
+            className='flex-1 gap-2 sm:flex-none'
+            render={
+              <a href={cashierUrl} target='_blank' rel='noopener noreferrer' />
+            }
           >
-            <Receipt className='h-4 w-4' />
-            {t('Order History')}
+            <CreditCard className='h-4 w-4' />
+            {t('Recharge')}
           </Button>
-        ) : null
+          {onOpenBilling ? (
+            <Button
+              variant='outline'
+              size='sm'
+              onClick={onOpenBilling}
+              className='flex-1 gap-2 sm:flex-none'
+            >
+              <Receipt className='h-4 w-4' />
+              {t('Order History')}
+            </Button>
+          ) : null}
+        </div>
       }
       contentClassName='space-y-4 sm:space-y-6'
     >
