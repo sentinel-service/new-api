@@ -14,6 +14,10 @@ export default defineConfig(({ envMode }) => {
     process.env.VITE_REACT_APP_SERVER_URL ||
     env.rawPublicVars.VITE_REACT_APP_SERVER_URL ||
     'http://localhost:3000'
+  const cashierUrl =
+    process.env.VITE_CASHIER_SERVER_URL ||
+    env.rawPublicVars.VITE_CASHIER_SERVER_URL ||
+    'http://localhost:8088'
 
   const isProd = envMode === 'production'
   const devProxy = Object.fromEntries(
@@ -22,6 +26,7 @@ export default defineConfig(({ envMode }) => {
       { target: serverUrl, changeOrigin: true },
     ])
   ) as Record<string, { target: string; changeOrigin: boolean }>
+  devProxy['/cashier'] = { target: cashierUrl, changeOrigin: true }
 
   return {
     plugins: [pluginReact(), pluginTailwindcss({ optimize: false })],
