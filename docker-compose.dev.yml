@@ -19,6 +19,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      args:
+        GOPROXY: ${GOPROXY:-https://goproxy.cn,direct}
     image: new-api-dev:local
     container_name: new-api-dev
     restart: unless-stopped
@@ -31,6 +33,7 @@ services:
       - REDIS_CONN_STRING=redis://redis
       - TZ=Asia/Shanghai
       - BATCH_UPDATE_ENABLED=true
+      - TRUSTED_PROXIES=none
       # Local HTTP dev mode: keep Secure=false and leave TRUSTED_URL unset. This disables the refresh/logout OriginGuard so the :5173 -> :3000 dev proxy works.
       - SESSION_COOKIE_SECURE=false
       # For HTTPS only: set Secure=true and list every exact trusted HTTPS browser Origin. This does not configure relay CORS.
@@ -43,6 +46,12 @@ services:
         condition: service_healthy
     networks:
       - dev-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://localhost:3000/api/status | grep -q '\"success\":true'"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 10s
 
   redis:
     image: redis:7-alpine
