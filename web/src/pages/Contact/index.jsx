@@ -1,39 +1,24 @@
 /*
 Copyright (C) 2025 QuantumNous
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+For commercial licensing, please contact support@quantumnous.com
 */
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-const CUSTOMER_WECHAT_QR = '/customer-wechat-qr.png';
-const CUSTOMER_WECHAT_ID = 'wxid_bx86mr5cg03y22';
-
-const WeChatSupportCard = ({ description, title }) => (
-  <div className="mt-4 rounded-xl border border-[rgba(0,0,0,0.06)] dark:border-[rgba(255,255,255,0.08)] bg-[rgba(0,0,0,0.02)] dark:bg-[rgba(255,255,255,0.03)] p-8 text-center">
-    <div className="mb-4">
-      <svg className="mx-auto h-12 w-12 text-semi-color-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-      </svg>
-    </div>
-    <h2 className="text-xl font-medium mb-4">{title}</h2>
-    <p className="text-sm !text-semi-color-text-2 mb-6">
-      {description}
-    </p>
-    <div className="flex flex-col items-center justify-center gap-4">
-      <img
-        src={CUSTOMER_WECHAT_QR}
-        alt={title}
-        className="w-52 max-w-full rounded-xl border border-[rgba(0,0,0,0.06)] bg-white p-2 shadow-sm dark:border-[rgba(255,255,255,0.08)]"
-      />
-      <span className="inline-flex items-center px-6 py-3 font-medium rounded-lg bg-[rgba(0,0,0,0.04)] dark:bg-[rgba(255,255,255,0.06)]">
-        <svg className="w-5 h-5 mr-2 text-semi-color-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
-        {CUSTOMER_WECHAT_ID}
-      </span>
-    </div>
-  </div>
-);
 
 // 中文版联系我们
 const ContactZh = () => (
@@ -65,11 +50,6 @@ const ContactZh = () => (
         </a>
       </div>
     </div>
-
-    <WeChatSupportCard
-      title="微信客服"
-      description="您也可以通过微信联系我们的客服。"
-    />
   </>
 );
 
@@ -103,11 +83,6 @@ const ContactEn = () => (
         </a>
       </div>
     </div>
-
-    <WeChatSupportCard
-      title="WeChat Support"
-      description="You can also reach our support team via WeChat."
-    />
   </>
 );
 
