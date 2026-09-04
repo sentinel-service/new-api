@@ -24,15 +24,26 @@ const LEGACY_FOOTER_TRANSLATION_KEYS: Record<string, string> = {
   隐私协议: 'Privacy Policy',
 }
 
+const LEGACY_FOOTER_ROUTES: Record<string, string> = {
+  '/privacy-agreement': '/privacy-policy',
+  '/terms-of-service': '/user-agreement',
+}
+
 export function translateLegacyFooterHtml(
   html: string,
   translate: (key: string) => string
 ): string {
-  return html.replaceAll(
+  const translatedHtml = html.replaceAll(
     /\{\{t:([^}]+)\}\}/g,
     (_placeholder, rawKey: string) => {
       const key = rawKey.trim()
       return translate(LEGACY_FOOTER_TRANSLATION_KEYS[key] ?? key)
     }
+  )
+
+  return translatedHtml.replaceAll(
+    /href=(['"])(\/privacy-agreement|\/terms-of-service)\1/g,
+    (_attribute, quote: string, route: string) =>
+      `href=${quote}${LEGACY_FOOTER_ROUTES[route]}${quote}`
   )
 }

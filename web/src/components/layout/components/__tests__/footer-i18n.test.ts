@@ -18,7 +18,7 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import { describe, expect, it, vi } from 'vitest'
 
-import { translateLegacyFooterHtml } from './footer-i18n'
+import { translateLegacyFooterHtml } from '../footer-i18n'
 
 describe('translateLegacyFooterHtml', () => {
   it('maps legacy Chinese placeholders to current translation keys', () => {
@@ -37,10 +37,25 @@ describe('translateLegacyFooterHtml', () => {
     )
   })
 
+  it('rewrites legacy legal links to routes provided by the current frontend', () => {
+    const html = [
+      '<a href="/privacy-agreement">Privacy</a>',
+      '<a href="/terms-of-service">Terms</a>',
+      '<a href="/contact">Contact</a>',
+    ].join('')
+
+    expect(translateLegacyFooterHtml(html, (key) => key)).toBe(
+      '<a href="/privacy-policy">Privacy</a>' +
+        '<a href="/user-agreement">Terms</a>' +
+        '<a href="/contact">Contact</a>'
+    )
+  })
+
   it('supports custom placeholders and trims their keys', () => {
     expect(
-      translateLegacyFooterHtml('<span>{{t: Custom footer key }}</span>', (key) =>
-        key.toUpperCase()
+      translateLegacyFooterHtml(
+        '<span>{{t: Custom footer key }}</span>',
+        (key) => key.toUpperCase()
       )
     ).toBe('<span>CUSTOM FOOTER KEY</span>')
   })
