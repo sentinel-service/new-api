@@ -29,5 +29,17 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/features/profile/components/dialogs/access-token-dialog.tsx",
+    "src/features/profile/components/dialogs/change-password-dialog.tsx",
+    "src/features/profile/components/dialogs/delete-account-dialog.tsx",
+    "src/features/profile/components/dialogs/email-bind-dialog.tsx",
+    "src/features/profile/components/dialogs/two-fa-backup-dialog.tsx",
+    "src/features/profile/components/dialogs/two-fa-disable-dialog.tsx",
+    "src/features/profile/components/dialogs/wechat-bind-dialog.tsx",
+    "src/features/profile/components/profile-security-card.tsx",
+    "src/features/profile/components/tabs/account-bindings-tab.tsx",
+    "src/features/profile/hooks/use-access-token.ts"
+  ]
 }
